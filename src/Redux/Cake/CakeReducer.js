@@ -1,0 +1,18 @@
+import { BUY_CAKE } from "./CakeTypes"
+
+const initialState ={
+    numOfCakes : 10,
+}
+
+const CakeReducer = (state = initialState , action) =>{
+    switch(action.type){
+        case BUY_CAKE: 
+        if(state.numOfCakes > 1) {
+            return {...state, numOfCakes :  state.numOfCakes - action.payload};
+        }
+         default :
+         return state;
+    }
+};
+
+export default CakeReducer;
