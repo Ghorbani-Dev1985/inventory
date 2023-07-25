@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import PostSaga from "../PostsSaga/PostsSaga";
 import { MdOutlineInventory } from "react-icons/md";
@@ -11,6 +11,57 @@ import ProductList from "../Components/ProductList/ProductList";
 
 const HomePage = (props) => {
   const [categories, setCategories] = useState([]);
+  const [products, setProducts] = useState([]);
+  const [filteredProducts, setFilteredProducts] = useState([]);
+  const [sort, setSort] = useState("latest");
+  const [searchValue, setSearchValue] = useState("");
+
+  useEffect(() => {
+    let result = products;
+    result = filterSearchTitle(result);
+    result = sortDate(result);
+    setFilteredProducts(result);
+  }, [products, sort, searchValue]);
+
+  const sortHandler = (e) => {
+    setSort(e.target.value);
+  };
+  const searchHandler = (e) => {
+    setSearchValue(e.target.value.toLowerCase());
+  };
+  const filterSearchTitle = (array) => {
+    return array.filter((p) => p.title.toLowerCase().includes(searchValue));
+  };
+  const sortDate = (array) => {
+    let sortedProducts = [...array];
+    return sortedProducts.sort((itemOne, itemTwo) => {
+      if (sort === "latest") {
+        return new Date(itemOne.createdAt) > new Date(itemTwo.createdAt)
+          ? -1
+          : 1;
+      } else if (sort === "earliest") {
+        return new Date(itemOne.createdAt) > new Date(itemTwo.createdAt)
+          ? 1
+          : -1;
+      }
+    });
+  };
+
+  useEffect (() => {
+  const savedProducts = JSON.parse(localStorage.getItem('products')) || [];
+  const savedCategories = JSON.parse(localStorage.getItem('categories')) || [];
+  setProducts(savedProducts);
+  setCategories(savedCategories);
+  }, []);
+
+  useEffect(() => {
+    if(products.length) localStorage.setItem('products' , JSON.stringify(products));
+  } , [products]);
+
+  useEffect(() => {
+   if(categories.length) localStorage.setItem('categories' , JSON.stringify(categories));
+  } , [categories]);
+
   return (
     <>
       <aside className="fixed top-0 z-10 ml-[-100%] flex h-screen w-full flex-col justify-between border-r bg-white px-6 pb-3 transition duration-300 md:w-4/12 lg:ml-0 lg:w-[25%] xl:w-[20%] 2xl:w-[15%] dark:bg-gray-800 dark:border-gray-700">
@@ -32,17 +83,24 @@ const HomePage = (props) => {
         <div className="px-6 pt-6 2xl:container">
           <div className="grid gap-6 grid-cols-2">
             <div className="col=span-2 md:col-span-1">
-              <div className="h-full space-y-6 group p-2 rounded-3xl bg-white border border-gray-200/50 dark:shadow-none dark:border-gray-700 dark:bg-gray-800 bg-opacity-50 shadow-2xl shadow-gray-600/10">
+              <div className="space-y-6 group p-2 rounded-3xl bg-white border border-gray-200/50 dark:shadow-none dark:border-gray-700 dark:bg-gray-800 bg-opacity-50 shadow-2xl shadow-gray-600/10">
                 <Category setCategories={setCategories} />
-                <Products categories={categories}/>
+                <Products categories={categories} setProducts={setProducts} />
               </div>
             </div>
-            <div>
-              <div className="group p-6 flex flex-col sm:p-8 rounded-3xl bg-white border border-gray-200/50 dark:shadow-none dark:border-gray-700 dark:bg-gray-800 bg-opacity-50 shadow-2xl shadow-gray-600/10 lg:h-full">
-                <Filter />
-                <p className="w-full bg-gray-300 h-px my-3"></p>
-                <ProductList />
-              </div>
+            <div className="group p-6 flex flex-col sm:p-8 rounded-3xl bg-white border border-gray-200/50 dark:shadow-none dark:border-gray-700 dark:bg-gray-800 bg-opacity-50 shadow-2xl shadow-gray-600/10 lg:h-full">
+              <Filter
+                sort={sort}
+                searchValue={searchValue}
+                onSort={sortHandler}
+                onSearch={searchHandler}
+              />
+              <p className="w-full bg-gray-300 h-px my-3"></p>
+              <ProductList
+                products={filteredProducts}
+                categories={categories}
+                setProducts={setProducts}
+              />
             </div>
           </div>
         </div>

@@ -1,16 +1,15 @@
 import { useState } from "react";
 import { BiCaretDown, BiSolidPlusCircle } from "react-icons/bi";
 
-const Products = ({ categories }) => {
+const Products = ({ categories , setProducts }) => {
   const [productsFormData, setProductsFormData] = useState({
     title: "",
     quantity: 1,
     categoryId: "",
   });
-  const [products , setProducts] = useState([]);
+
   const changeHandler = ({ target }) => {
     const { name, value } = target;
-    console.log(name, value);
     setProductsFormData({ ...productsFormData, [name]: value });
   };
   const addNewProduct = (e) => {
@@ -71,6 +70,7 @@ const Products = ({ categories }) => {
           >
             <option
              value=""
+             disabled
             >
               لطفا یکی از دسته بندی ها را انتخاب نمایید
             </option>
