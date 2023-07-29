@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { BiCaretDown, BiSolidPlusCircle } from "react-icons/bi";
+import { toast } from "react-toastify";
 
 const Products = ({ categories , setProducts }) => {
   const [productsFormData, setProductsFormData] = useState({
@@ -16,6 +17,7 @@ const Products = ({ categories , setProducts }) => {
      e.preventDefault();
      const newProduct = {...productsFormData , id: new Date().getTime() , createdAt : new Date().toISOString()}
      setProducts((prevState) => [...prevState , newProduct]);
+     toast.success(`محصول ${productsFormData.title} با موفقیت ثبت شد`);
     setProductsFormData({title: "" , quantity : 1 , categoryId: ""});
   };
   return (

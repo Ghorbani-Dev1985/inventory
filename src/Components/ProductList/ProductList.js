@@ -1,5 +1,6 @@
 import { BiTrash } from "react-icons/bi";
 import { HiOutlineExclamationCircle } from "react-icons/hi2";
+import { toast } from "react-toastify";
 const ProductList = ({ products, categories, setProducts }) => {
   const findCategory = (categoryId) => {
     return categories.find((c) => c.id === parseInt(categoryId)).title;
@@ -9,6 +10,7 @@ const ProductList = ({ products, categories, setProducts }) => {
       (product) => product.id !== parseInt(productId)
     );
     setProducts(filteredProducts);
+    toast.warning(`محصول با موفقیت حذف گردید`)
   };
   return (
     <>

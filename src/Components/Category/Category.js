@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { BiLayerPlus } from "react-icons/bi";
+import { toast } from "react-toastify";
 
 const Category = ({setCategories}) => {
   const [isSHOW, setIsShow] = useState(false);
@@ -18,6 +19,7 @@ const Category = ({setCategories}) => {
     const newCategory = {...categoryFormData , id: new Date().getTime() , createdAt : new Date().toISOString()}
     setCategories((prevState) => [...prevState , newCategory]);
     setIsShow(false);
+    toast.success(`دسته بندی ${categoryFormData.title} با موفقیت افزوده شد`);
     categoryFormData.title = "";
     categoryFormData.description = "";
   };
