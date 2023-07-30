@@ -2,13 +2,12 @@ import { useState } from "react";
 import { BiLayerPlus } from "react-icons/bi";
 import { toast } from "react-toastify";
 
-const Category = ({setCategories}) => {
+const Category = ({ setCategories }) => {
   const [isSHOW, setIsShow] = useState(false);
   const [categoryFormData, setCategoryFormData] = useState({
     title: "",
     description: "",
   });
-
 
   const changeHandler = ({ target }) => {
     const { name, value } = target;
@@ -16,8 +15,12 @@ const Category = ({setCategories}) => {
   };
   const addNewCategoryHandler = (e) => {
     e.preventDefault();
-    const newCategory = {...categoryFormData , id: new Date().getTime() , createdAt : new Date().toISOString()}
-    setCategories((prevState) => [...prevState , newCategory]);
+    const newCategory = {
+      ...categoryFormData,
+      id: new Date().getTime(),
+      createdAt: new Date().toISOString(),
+    };
+    setCategories((prevState) => [...prevState, newCategory]);
     setIsShow(false);
     toast.success(`دسته بندی ${categoryFormData.title} با موفقیت افزوده شد`);
     categoryFormData.title = "";
@@ -77,7 +80,7 @@ const Category = ({setCategories}) => {
                 onClick={addNewCategoryHandler}
                 className="focus:outline-none w-full text-white bg-indigo-800 hover:bg-white focus:ring-4 focus:ring-inbg-indigo-800 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-indigo-800 dark:hover:bg-indigo-800 dark:focus:ring-inbg-indigo-800"
               >
-                ثبت دسته بندی جدید
+                ثبت دسته بندی 
               </button>
             </div>
             <div className="flex flex-1">

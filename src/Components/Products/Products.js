@@ -13,6 +13,7 @@ const Products = ({ categories , setProducts }) => {
     const { name, value } = target;
     setProductsFormData({ ...productsFormData, [name]: value });
   };
+
   const addNewProduct = (e) => {
      e.preventDefault();
      const newProduct = {...productsFormData , id: new Date().getTime() , createdAt : new Date().toISOString()}

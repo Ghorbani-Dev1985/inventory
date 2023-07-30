@@ -72,7 +72,7 @@ const HomePage = (props) => {
 
   return (
     <>
-      <aside className="fixed top-0 z-10 ml-[-100%] flex h-screen w-full flex-col justify-between border-r bg-white px-6 pb-3 transition duration-300 md:w-4/12 lg:ml-0 lg:w-[25%] xl:w-[20%] 2xl:w-[15%] dark:bg-gray-800 dark:border-gray-700">
+      <aside className="fixed top-0 z-10 ml-[-100%] hidden lg:flex h-screen w-full flex-col justify-between border-r bg-white px-6 pb-3 transition duration-300 md:w-4/12 lg:ml-0 lg:w-[25%] xl:w-[20%] 2xl:w-[15%] dark:bg-gray-800 dark:border-gray-700">
         <div>
           <div className="mt-16 w-full flex flex-col items-center">
             <MdOutlineInventory className="text-8xl text-indigo-800" />
@@ -81,15 +81,15 @@ const HomePage = (props) => {
             </h1>
           </div>
 
-          <Navigation />
+          <Navigation categories={categories} products={products}/>
         </div>
 
         <div className="-mx-6 flex items-center justify-between border-t px-6 pt-4 dark:border-gray-700"></div>
       </aside>
       <div className="mr-auto mb-6 lg:w-[75%] xl:w-[80%] 2xl:w-[85%]">
-        <Headder />
+        <Headder categories={categories} products={products}/>
         <div className="px-6 pt-6 2xl:container">
-          <div className="grid gap-6 grid-cols-2">
+          <div className="grid gap-6 grid-cols-1 md:grid-cols-2">
             <div className="col=span-2 md:col-span-1">
               <div className="space-y-6 group p-2 rounded-3xl bg-white border border-gray-200/50 dark:shadow-none dark:border-gray-700 dark:bg-gray-800 bg-opacity-50 shadow-2xl shadow-gray-600/10">
                 <Category setCategories={setCategories} />

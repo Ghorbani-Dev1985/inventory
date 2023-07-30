@@ -73,7 +73,7 @@ const ProductList = ({ products, categories, setProducts }) => {
                         <BiTrash
                           onClick={() => deleteProduct(product.id)}
                           className="text-red-500 text-lg cursor-pointer hover:text-xl"
-                        />
+                          />
                       </td>
                     </tr>
                   </>
